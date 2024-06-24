@@ -2,71 +2,95 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <script>
-            function getComputerChoice() {
-                let random = Math.random() * 100;
-                if (random <= 33) {
-                    return "Rock";
-                } else if (random > 33 && random <= 66) {
-                    return "Paper";
-                } else return "Scissors";
-            }
-            function getHumanChoice() {
-                    let rps = prompt("Rock, paper, or scissors?");
-                    return rps[0].toUpperCase() + rps.slice(1).toLowerCase();
-                }
-
-        
-            function playGame() {
-                let humanScore = 0;
-                let computerScore = 0;
-                let roundCounter = 0;
-                function playRound() {
-                    let humanChoice = getHumanChoice();
-                    let computerChoice = getComputerChoice();
-                    if (humanChoice === "Rock" && computerChoice === "Paper") {
-                        console.log("You lose the round!! Paper covers Rock");
-                        computerScore++;
-                    } else if (humanChoice === "Paper" && computerChoice === "Paper") {
-                        console.log("Draw! Paper neutralizes Paper."); 
-                    } else if (humanChoice === "Scissors" && computerChoice === "Paper") {
-                        console.log("You win the round! Scissors cuts Paper!");
-                        humanScore++;
-                    } else if (humanChoice === "Paper" && computerChoice === "Rock") {
-                        console.log("You win the round! Paper covers Rock!");
-                        humanScore++;
-                    } else if (humanChoice === "Paper" && computerChoice === "Scissors") {
-                        console.log("You lose the round! Paper gets cut by Scissors!");
-                        computerScore++;
-                    } else if (humanChoice === "Scissors" && computerChoice === "Rock") {
-                        console.log("You lose the round! Scissors get smashed by rock!");
-                        computerScore++;
-                    } else if (humanChoice === "Rock" && computerChoice === "Rock") {
-                        console.log("Draw! Rock neutralizes Rock!");
-                    } else if (humanChoice === "Rock" && computerChoice === "Scissors") {
-                        console.log("You win the round! Rock smashes scissors!");
-                        humanScore++;
-                    }
-                    
-                    roundCounter++;
-                    }
-                    while (roundCounter < 5) {
-                        playRound();
-                    if (roundCounter === 5 && humanScore < computerScore) {
-                        console.log("You lose!")
-                    } else if (roundCounter === 5 && computerScore < humanScore) {
-                        console.log("You win!");
-                    }
-
-
-
-            }
-        }
-
-        </script>
+       
     </head>
     <body>
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+    <div class ="results"></div>
+    <div class ="narrator"></div>
 
+
+    <script>
+        function getComputerChoice() {
+            let random = Math.random() * 100;
+            if (random <= 33) {
+                return "Rock";
+            } else if (random > 33 && random <= 66) {
+                return "Paper";
+            } else return "Scissors";
+        }
+
+    
+            let humanScore = 0;
+            let computerScore = 0;
+            function playRound(choice) {
+                let humanChoice = choice;
+                let computerChoice = getComputerChoice();
+                if (humanChoice === "Rock" && computerChoice === "Paper") {
+                    narrator.textContent = "You lose the round!! Paper covers Rock";
+                    computerScore++;
+                } else if (humanChoice === "Paper" && computerChoice === "Paper") {
+                    narrator.textContent = "Draw! Paper neutralizes Paper."; 
+                } else if (humanChoice === "Scissors" && computerChoice === "Paper") {
+                    narrator.textContent = "You win the round! Scissors cuts Paper!";
+                    humanScore++;
+                } else if (humanChoice === "Paper" && computerChoice === "Rock") {
+                    narrator.textContent = "You win the round! Paper covers Rock!";
+                    humanScore++;
+                } else if (humanChoice === "Paper" && computerChoice === "Scissors") {
+                    narrator.textContent = "You lose the round! Paper gets cut by Scissors!";
+                    computerScore++;
+                } else if (humanChoice === "Scissors" && computerChoice === "Rock") {
+                    narrator.textContent = "You lose the round! Scissors get smashed by rock!";
+                    computerScore++;
+                } else if (humanChoice === "Rock" && computerChoice === "Rock") {
+                    narrator.textContent = "Draw! Rock neutralizes Rock!";
+                } else if (humanChoice === "Rock" && computerChoice === "Scissors") {
+                    narrator.textContent = "You win the round! Rock smashes scissors!";
+                    humanScore++;
+                } else if (humanChoice === "Scissors" && computerChoice === "Scissors") {
+                    narrator.textContent = "Draw! Scissors neutralizes Scissors.";
+                }
+                results.textContent = `${humanScore} to ${computerScore}`
+                if (humanScore === 5) {
+                    narrator.textContent = "You win! Let's play again!"
+                    humanScore = 0;
+                    computerScore = 0;
+
+                }
+                if (computerScore === 5) {
+                    narrator.textContent = "You lose! Let's play again!"
+                    humanScore = 0;
+                    computerScore = 0;
+                }
+
+
+
+
+        }
+
+    let rock = document.querySelector("#rock");
+    let paper = document.querySelector("#paper");
+    let scissors = document.querySelector("#scissors");
+    let results = document.querySelector(".results");
+    results.textContent = `First to 5 wins`
+    let narrator = document.querySelector(".narrator");
+    // must be called anonymously
+    rock.addEventListener("click", () => { 
+        playRound("Rock" )
+
+    });
+    paper.addEventListener("click", () => { 
+        playRound("Paper")
+
+    });
+    scissors.addEventListener("click", () => { 
+        playRound("Scissors")
+    });
+
+    </script>
     </body>
 
 </html>
